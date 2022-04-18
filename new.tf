@@ -13,12 +13,18 @@ data "aws_ami" "ubuntu" {
 
   owners = ["099720109477"] # Canonical
 }
+data "template_file" "user_data" {
+  template = "${file("bash.sh")}"
+}
 
 resource "aws_instance" "web" {
   ami           = data.aws_ami.ubuntu.id
   instance_type = "t2.micro"
+  key_name      = "devops"
+
+  user_data = "${data.template_file.user_data.rendered}"
 
   tags = {
-    Name = "HelloWorld"
+    Name = "web-server"
   }
 }

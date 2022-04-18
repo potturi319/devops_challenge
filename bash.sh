@@ -6,8 +6,11 @@ then
     echo "nginx found"
 else
     echo "nginx not found. Please approve installation."
-    sudo apt install nginx -y
+    sudo apt-get update -y
+    sudo apt-get install nginx -y
+    sudo systemctl start nginx
     if [ "$?" = "0" ];
-    then echo nginx installed successfully.
+    then 
+    echo "nginx installed successfully."
     fi
 fi
