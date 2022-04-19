@@ -1,0 +1,26 @@
+pipeline {
+    agent "any"
+    tools {
+    terraform 'terraform'
+}
+    
+    stages {
+        stage ('checkout code') {
+            steps  {
+                git credentialsId: 'gitHub', url: 'https://github.com/potturi319/devops_challenge.git'
+            }
+        }
+        stage ('provising infrastructure') {
+            steps  {
+                
+                bat "terraform init"
+            }
+        }   
+        stage ('checking terraform planing & applying') {
+            steps {
+                bat "terraform plan"
+                bat"terraform apply -auto-approve"
+            }
+        }
+    }
+}
